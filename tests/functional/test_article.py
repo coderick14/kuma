@@ -10,6 +10,12 @@ ARTICLE_NAME = 'User:anonymous:uitest'
 ARTICLE_TITLE_SUFIX = " | MDN"
 
 
+@pytest.fixture
+def firefox_options(firefox_options):
+    firefox_options.log.level = 'trace'
+    return firefox_options
+
+
 @pytest.mark.smoke
 @pytest.mark.nondestructive
 def test_title(base_url, selenium):
