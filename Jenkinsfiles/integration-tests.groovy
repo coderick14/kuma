@@ -6,14 +6,14 @@ stage('Build') {
   }
 }
 
-stage('Functional') {
+def run_functional(browser) {
   def pwd = pwd()
   def cmd = "py.test tests/functional" +
             " --driver Remote" +
-            " --capability browserName firefox" +
+            " --capability browserName ${browser}" +
             " --host hub" +
             " --base-url='${config.job.base_url}'" +
-            " --junit-xml=/test_results/integration.xml"
+            " --junit-xml=/test_results/functional-${browser}.xml"
   if (config.job && config.job.tests) {
     cmd += " -m \"${config.job.tests}\""
   }
@@ -23,7 +23,7 @@ stage('Functional') {
 
   dockerRun("selenium/hub:${config.job.selenium}",
             ["docker_args": "--name selenium-hub-${BUILD_TAG}"]) {
-    dockerRun("selenium/node-firefox:${config.job.selenium}",
+    dockerRun("selenium/node-${browser}:${config.job.selenium}",
               ["docker_args": "--link selenium-hub-${BUILD_TAG}:hub",
                "copies": config.job.selenium_nodes]) {
       dockerRun("kuma-integration-tests:${GIT_COMMIT_SHORT}",
@@ -35,6 +35,10 @@ stage('Functional') {
   }
 }
 
+stage('Chrome') {
+  run_functional('chrome')
+}
+
 stage('Headless') {
   def pwd = pwd()
   dockerRun("kuma-integration-tests:${GIT_COMMIT_SHORT}",
@@ -43,4 +47,8 @@ stage('Headless') {
              "cmd": "py.test tests/headless" +
                     " --base-url='${config.job.base_url}'" +
                     " --junit-xml=/test_results/headless.xml"])
+}
+
+stage('Firefox') {
+  run_functional('firefox')
 }
