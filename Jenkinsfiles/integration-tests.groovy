@@ -14,6 +14,7 @@ def run_functional(browser) {
             " --host hub" +
             " --base-url='${config.job.base_url}'" +
             " --junit-xml=/test_results/functional-${browser}.xml"
+  def hubname = "selenium-hub-for-${browser}-${BUILD_TAG}"
   if (config.job && config.job.tests) {
     cmd += " -m \"${config.job.tests}\""
   }
@@ -22,12 +23,12 @@ def run_functional(browser) {
   }
 
   dockerRun("selenium/hub:${config.job.selenium}",
-            ["docker_args": "--name selenium-hub-${BUILD_TAG}"]) {
+            ["docker_args": "--name ${hubname}"]) {
     dockerRun("selenium/node-${browser}:${config.job.selenium}",
-              ["docker_args": "--link selenium-hub-${BUILD_TAG}:hub",
+              ["docker_args": "--link ${hubname}:hub",
                "copies": config.job.selenium_nodes]) {
       dockerRun("kuma-integration-tests:${GIT_COMMIT_SHORT}",
-                ["docker_args": "--link selenium-hub-${BUILD_TAG}:hub" +
+                ["docker_args": "--link ${hubname}:hub" +
                                 " --volume ${pwd}/test_results:/test_results" +
                                 " --user 1000",
                  "cmd": cmd])
