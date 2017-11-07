@@ -1,7 +1,7 @@
 #!/bin/bash -vx
 PYTEST_ARGS="${@}"
 if [ -z "$PYTEST_ARGS" ]; then
-    PYTEST_ARGS="tests/functional -m \"not login\" -vv -sx"
+    PYTEST_ARGS="tests/functional -m \"not login\" -vv"
 fi
 echo "ARGS=$PYTEST_ARGS"
 BASE_URL=${BASE_URL:-https://stage.mdn.moz.works}
