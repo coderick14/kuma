@@ -108,9 +108,9 @@ $error: #900;
 /*
 typography
 ====================================================================== */
-$site-font-family-fallback: arial, x-locale-body, sans-serif;
-$site-font-family: 'Open Sans', $site-font-family-fallback;
-$heading-font-family-fallback: 'Palatino', 'Palatino Linotype', x-locale-heading-secondary, serif;
+$site-font-family-fallback: x-locale-body-primary, arial, x-locale-body-secondary, sans-serif;
+$site-font-family: x-locale-body-primary, 'Open Sans', $site-font-family-fallback;
+$heading-font-family-fallback: x-locale-heading-primary, 'Palatino', 'Palatino Linotype', x-locale-heading-secondary, serif;
 $heading-font-family: x-locale-heading-primary, zillaslab, $heading-font-family-fallback;
 $tiny-font-family: 'Helvetica', arial, sans-serif;
 $heading-line-height: 1.2;

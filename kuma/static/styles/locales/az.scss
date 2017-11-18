@@ -9,13 +9,13 @@ Styles for Azerbaijani
 /* Bug 991516 */
 
 @font-face {
-    font-family: x-locale-body;
+    font-family: x-locale-body-secondary;
     font-weight: normal;
     src: url('#{$path-to-locale-fonts}#{'az/mplus-2c-regular-az-subset.woff'}') format('woff');
 }
 
 @font-face {
-    font-family: x-locale-body;
+    font-family: x-locale-body-secondary;
     font-weight: bold;
     src: url('#{$path-to-locale-fonts}#{'az/mplus-2c-bold-az-subset.woff'}') format('woff');
 }
